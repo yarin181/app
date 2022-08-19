@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/note_content"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".NoteActivity">
+
+    <ListView
+        android:id="@+id/note_content2"
+        android:layout_width="403dp"
+        android:layout_height="376dp"
+        android:layout_below="@+id/Addbotom"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="74dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="17dp"
+        android:listSelector="@android:color/transparent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/Addbotom"
+        app:layout_constraintVertical_bias="0.752" />
+
+    <EditText
+        android:id="@+id/insertBox"
+        android:layout_width="390dp"
+        android:layout_height="66dp"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="38dp"
+        android:layout_marginEnd="20dp"
+        android:accessibilityLiveRegion="none"
+        android:accessibilityTraversalAfter="@id/Addbotom"
+        android:accessibilityTraversalBefore="@id/note_content2"
+        android:autofillHints=""
+        android:ems="10"
+        android:importantForAutofill="no"
+        android:inputType="textPersonName"
+        android:singleLine="true"
+        app:layout_constraintBottom_toTopOf="@+id/note_content2"
+        app:layout_constraintEnd_toStartOf="@+id/Addbotom"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0"
+        tools:text="write here" />
+
+    <Button
+        android:id="@+id/Addbotom"
+        android:layout_width="135dp"
+        android:layout_height="63dp"
+        android:layout_below="@+id/insertBox"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="6dp"
+        android:layout_marginEnd="133dp"
+        android:onClick="save"
+        android:text="Add"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+</RelativeLayout>
