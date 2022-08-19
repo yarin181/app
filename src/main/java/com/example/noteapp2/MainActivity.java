@@ -216,6 +216,7 @@ public class MainActivity extends AppCompatActivity {
             e.printStackTrace();
         }
     }
+
     public void load() {
         if (this.mainScreen == null){
             return;
