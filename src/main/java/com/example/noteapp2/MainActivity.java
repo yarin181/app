@@ -66,7 +66,13 @@ public class MainActivity extends AppCompatActivity {
                     if (intent != null){
                         String noteName = intent.getStringExtra("noteName");
                         System.out.println(noteName);
-                        mainScreen.addToList(noteName);
+                        if (!mainScreen.addToList(noteName)){
+                            (Toast.makeText(MainActivity.this, noteName +
+                                    " was exist \n the list stay as before" ,
+                                    Toast.LENGTH_LONG)).show();
+                            return;
+                        }
+
                         saveToFile();
 
                         Intent intent2 = new Intent(getApplicationContext(), NoteActivity.class);
@@ -78,18 +84,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         listView = (ListView) findViewById(R.id.notesList);
-
-//        ArrayList<String> arrayList = new ArrayList<>();
-//
-//        arrayList.add("str");
-//
-//        arrayList.add("Shop list");
-//        arrayList.add("Things to buy");
-//        arrayList.add("Shifts");
-//        arrayList.add("Tracking numbers ");
-//        arrayList.add("General list");
-//        arrayList.add("Not general list");
-//        arrayList.add("Not A list....");
         this.arrayAdapter = new ArrayAdapter<String>(MainActivity.this,
                 android.R.layout.simple_list_item_1,mainScreen.getNoteList());
 
@@ -127,52 +121,9 @@ public class MainActivity extends AppCompatActivity {
         (Toast.makeText(MainActivity.this, str + " was deleted" ,Toast.LENGTH_LONG)).show();
         file.delete();
         saveToFile();
-//        loadFromFile();
-//        load();
     }
 
 
-//    private ArrayAdapter<String> arrayAdapterGenerate(){
-//         class MyListAdaper extends ArrayAdapter<String> {
-//            private int layout;
-//            private List<String> mObjects;
-//            private MyListAdaper(Context context, int resource, List<String> objects) {
-//                super(context, resource, objects);
-//                mObjects = objects;
-//                layout = resource;
-//            }
-//
-//            @Override
-//            public View getView(final int position, View convertView, ViewGroup parent) {
-//                RecyclerView.ViewHolder mainViewholder = null;
-//                if(convertView == null) {
-//                    LayoutInflater inflater = LayoutInflater.from(getContext());
-//                    convertView = inflater.inflate(layout, parent, false);
-//                    RecyclerView.ViewHolder viewHolder = new ViewHolder();
-//                    viewHolder.thumbnail = (ImageView) convertView.findViewById(R.id.list_item_thumbnail);
-//                    viewHolder.title = (TextView) convertView.findViewById(R.id.list_item_text);
-//                    viewHolder.button = (Button) convertView.findViewById(R.id.list_item_btn);
-//                    convertView.setTag(viewHolder);
-//                }
-//                mainViewholder = (RecyclerView.ViewHolder) convertView.getTag();
-//                mainViewholder.button.setOnClickListener(new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View v) {
-//                        Toast.makeText(getContext(), "Button was clicked for list item " + position, Toast.LENGTH_SHORT).show();
-//                    }
-//                });
-//                mainViewholder.title.setText(getItem(position));
-//
-//                return convertView;
-//            }
-//        }
-//        public class ViewHolder {
-//
-//            ImageView thumbnail;
-//            TextView title;
-//            Button button;
-//        }
-//    }
 
     public void openNoteAddScreen(View view){
         Intent intent = new Intent(MainActivity.this, AddNotePopUP.class);
@@ -195,8 +146,6 @@ public class MainActivity extends AppCompatActivity {
             String response = stringBuilder.toString();
             Gson gson1 = new Gson();
             this.mainScreen = gson1.fromJson(response, MainScreen.class);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }

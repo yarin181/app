@@ -12,8 +12,14 @@ public class MainScreen {
     public ArrayList<String> getNoteList() {
         return noteList;
     }
-    public void addToList(String str){
+    public boolean addToList(String str){
+        for (String st: noteList) {
+            if (st.equals(str)){
+                return false;
+            }
+        }
         noteList.add(str);
+        return true;
     }
     public void removeFromList(String str){
         if (noteList.contains(str)){

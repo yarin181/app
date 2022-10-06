@@ -10,7 +10,14 @@ public class BasicNote {
         this.titleOfTheNote = titleOfTheNote;
         this.listOfContents = new ArrayList<String>();
     }
-
+    public boolean isExist(String str){
+        for (String st: listOfContents) {
+            if (st.equals(str)){
+                return true;
+            }
+        }
+        return false;
+    }
     public void addToList(String str){
         listOfContents.add(str);
     }
