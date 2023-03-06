@@ -30,7 +30,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class NoteActivity extends AppCompatActivity {
-    private String FILE_NAME; //=  ;
+    private String FILE_NAME;
     EditText content;
     ListView listView;
     BasicNote noteContent;
@@ -103,7 +103,7 @@ public class NoteActivity extends AppCompatActivity {
     }
     public void load() {
         listView = findViewById(R.id.note_content2);
-        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(NoteActivity.this,
+        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(NoteActivity.this,
                 android.R.layout.simple_list_item_1,noteContent.getListOfContents());
         listView.setAdapter(arrayAdapter);
     }

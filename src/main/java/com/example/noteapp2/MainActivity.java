@@ -1,5 +1,6 @@
 package com.example.noteapp2;
 
+
 import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultCaller;
@@ -51,41 +52,38 @@ public class MainActivity extends AppCompatActivity {
 
         loadFromFile();
         //load();
-        if (mainScreen ==null){
+        if (mainScreen == null) {
             mainScreen = new MainScreen();
         }
 
         activityLauncher = registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(),
                 new ActivityResultCallback<ActivityResult>() {
-            @Override
-            public void onActivityResult(ActivityResult result) {
-                Log.d(TAG,"onActivityResult: ");
-                if (result.getResultCode() == RESULT_OK){
-                    Intent intent =result.getData();
-                    if (intent != null){
-                        String noteName = intent.getStringExtra("noteName");
-                        System.out.println(noteName);
-                        if (!mainScreen.addToList(noteName)){
-                            (Toast.makeText(MainActivity.this, noteName +
-                                    " was exist \n the list stay as before" ,
-                                    Toast.LENGTH_LONG)).show();
-                            return;
+                    @Override
+                    public void onActivityResult(ActivityResult result) {
+                        Log.d(TAG, "onActivityResult: ");
+                        if (result.getResultCode() == RESULT_OK) {
+                            Intent intent = result.getData();
+                            if (intent != null) {
+                                String noteName = intent.getStringExtra("noteName");
+                                System.out.println(noteName);
+                                if (!mainScreen.addToList(noteName)) {
+                                    (Toast.makeText(MainActivity.this, noteName +
+                                                    " was exist \n the list stay as before",
+                                            Toast.LENGTH_LONG)).show();
+                                    return;
+                                }
+                                saveToFile();
+                                Intent intent2 = new Intent(getApplicationContext(), NoteActivity.class);
+                                intent2.putExtra("name", noteName);
+                                startActivity(intent2);
+                            }
                         }
-
-                        saveToFile();
-
-                        Intent intent2 = new Intent(getApplicationContext(), NoteActivity.class);
-                        intent2.putExtra("name", noteName);
-
-                        startActivity(intent2);
                     }
-                }
-            }
-        });
+                });
         listView = (ListView) findViewById(R.id.notesList);
-        this.arrayAdapter = new ArrayAdapter<String>(MainActivity.this,
-                android.R.layout.simple_list_item_1,mainScreen.getNoteList());
+        this.arrayAdapter = new ArrayAdapter<>(MainActivity.this,
+                android.R.layout.simple_list_item_1, mainScreen.getNoteList());
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -104,7 +102,7 @@ public class MainActivity extends AppCompatActivity {
                                            int pos, long id) {
                 // TODO Auto-generated method stub
                 deleteNote(mainScreen.getNoteList().get(pos));
-                Log.v("long clicked","pos: " + pos);
+                Log.v("long clicked", "pos: " + pos);
 
                 return true;
             }
@@ -112,24 +110,25 @@ public class MainActivity extends AppCompatActivity {
 
         listView.setAdapter(arrayAdapter);
     }
-    private void deleteNote(String str){
+
+    private void deleteNote(String str) {
 
         mainScreen.removeFromList(str);
         this.arrayAdapter.remove(str);
-        String FILE_NAME = "noteInfoOf"+str+".json";
-        File file = new File(this.getFilesDir(),FILE_NAME);
-        (Toast.makeText(MainActivity.this, str + " was deleted" ,Toast.LENGTH_LONG)).show();
+        String FILE_NAME = "noteInfoOf" + str + ".json";
+        File file = new File(this.getFilesDir(), FILE_NAME);
+        (Toast.makeText(MainActivity.this, str + " was deleted", Toast.LENGTH_LONG)).show();
         file.delete();
         saveToFile();
     }
 
 
-
-    public void openNoteAddScreen(View view){
+    public void openNoteAddScreen(View view) {
         Intent intent = new Intent(MainActivity.this, AddNotePopUP.class);
         activityLauncher.launch(intent);
     }
-    private void loadFromFile(){
+
+    private void loadFromFile() {
         File file;
         try {
             file = new File(this.getFilesDir(), FILE_NAME);
@@ -150,7 +149,8 @@ public class MainActivity extends AppCompatActivity {
             e.printStackTrace();
         }
     }
-    private void saveToFile(){
+
+    private void saveToFile() {
         Gson gson = new Gson();
         try {
             // Convert JsonObject to String Format
@@ -167,12 +167,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void load() {
-        if (this.mainScreen == null){
+        if (this.mainScreen == null) {
             return;
         }
         listView = findViewById(R.id.note_content2);
-        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(MainActivity.this,
-                android.R.layout.simple_list_item_1,this.mainScreen.getNoteList());
+        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(MainActivity.this,
+                android.R.layout.simple_list_item_1, this.mainScreen.getNoteList());
         listView.setAdapter(arrayAdapter);
     }
 }
